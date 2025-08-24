@@ -120,10 +120,11 @@
             font-family: 'TheFont';
             font-size: clamp(2vw, 5vw, 15vh);
             color: white;
-            text-align: center; 
+            text-align: center;
+            
             animation: letter-breathe 3s ease-in-out infinite;
         }
-        
+                
         @keyframes letter-breathe {
             from, to {
                 font-variation-settings: 'wght' 100;
@@ -150,13 +151,13 @@
 
         .screen-1 {
             background: hsl(213deg 85% 97%);
-            padding: 2.5em; /* Increased padding */
+            padding: 2.5em;
             display: flex;
             flex-direction: column;
             border-radius: 30px;
             box-shadow: 0 0 2em hsl(231deg 62% 94%);
-            gap: 2em; /* Increased gap for better spacing */
-            max-width: 450px; /* Slightly wider */
+            gap: 1.5em; /* Reduced gap since we're adding margin to fullname */
+            max-width: 450px;
             width: 90%;
         }
 
@@ -166,13 +167,25 @@
             margin-bottom: 0.5em; /* Added margin for spacing */
         }
 
-        .fullname, .passport {
+        .fullname {
             background: hsl(0deg 0% 100%);
             box-shadow: 0 0 2em hsl(231deg 62% 94%);
-            padding: 1.2em; /* Increased padding */
+            padding: 1.2em;
             display: flex;
             flex-direction: column;
-            gap: 0.8em; /* Increased gap */
+            gap: 0.8em;
+            border-radius: 20px;
+            color: hsl(0deg 0% 30%);
+            margin-bottom: 1.5em; /* Added margin bottom */
+        }
+
+        .passport {
+            background: hsl(0deg 0% 100%);
+            box-shadow: 0 0 2em hsl(231deg 62% 94%);
+            padding: 1.2em;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8em;
             border-radius: 20px;
             color: hsl(0deg 0% 30%);
         }
@@ -203,7 +216,7 @@
 
         .login-btn {
             padding: 1.2em; /* Increased padding */
-            background: hsl(233deg 36% 38%);
+            background: #87CEEB;
             color: hsl(0 0 100);
             border: none;
             border-radius: 30px;
@@ -216,7 +229,7 @@
         }
 
         .login-btn:hover {
-            background: hsl(233deg 36% 30%);
+            background: #6BB7D6;
             transform: translateY(-2px);
         }
 
@@ -235,7 +248,7 @@
         }
 
         .footer span:hover {
-            color: hsl(233deg 36% 38%);
+            color: #87CEEB;
         }
 
         button {
@@ -247,11 +260,13 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
             background-color: #f5f5f5;
             padding: 20px;
             overflow-y: auto;
+            overflow-x: hidden;
+            box-sizing: border-box;
             z-index: 700;
             display: none;
         }
@@ -261,14 +276,14 @@
             text-align: center;
             margin-bottom: 40px;
             animation: letter-breathe 3s ease-in-out infinite;
-            color: #4C489D;
+            color: #87CEEB;
         }
 
         .letter-button {
             display: block;
             margin: 30px auto;
             padding: 15px 30px;
-            background: linear-gradient(90deg, #5D54A4, #7C78B8);
+            background: linear-gradient(90deg, #87CEEB, #6BB7D6);
             color: white;
             border: none;
             border-radius: 26px;
@@ -286,19 +301,21 @@
 
         /* Grid layout */
         ol, ol::before, ol::after, 
-        ol *, ol *::before, ol *::after { 
-            margin: 0; 
-            padding: 0; 
-            box-sizing: border-box; 
+        ol *, ol *::before, ol *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        
-        ol { 
+                
+        ol {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
             gap: 1rem;
-            width: min(60rem, calc(100% - 2rem));
-            margin-inline: auto;
-            padding-block: 1rem;
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            padding: 1rem;
+            box-sizing: border-box;
             list-style: none;
         }
 
@@ -315,13 +332,13 @@
             --number-overlap: 0.5rem;
             --number-font-family: 'Oswald', sans-serif;
             --number-font-weight: 500;
-            
+                        
             margin: var(--outset-size);
             margin-top: calc(var(--number-font-size) - var(--number-overlap));
             border-radius: var(--card-border-radius);
             padding-block: var(--card-padding-block);
             padding-inline: var(--card-padding-inline);
-            
+                        
             color: var(--card-text-color);
             background-color: var(--card-background-color);
             box-shadow: 
@@ -353,16 +370,16 @@
             bottom: calc(var(--outset-size) * -1);
             left: calc(var(--outset-size) * -1);
             z-index: -1;
-            
+                        
             border-bottom-left-radius: calc(var(--card-border-radius) + var(--outset-size));
             border-bottom-right-radius: calc(var(--card-border-radius) + var(--outset-size));
-            
+                        
             background-color: var(--outset-background-color);
-            
+                        
             background-image: 
                 linear-gradient(to left, var(--outset-background-color) calc(var(--outset-size) * 2), transparent 0),
-                linear-gradient(135deg, var(--accent-color) 80%, var(--outset-background-color) 0);    
-        }
+                linear-gradient(135deg, var(--accent-color) 80%, var(--outset-background-color) 0);
+            }
 
         /* Card content */
         .icon {
@@ -370,14 +387,14 @@
             text-align: center;
             margin-bottom: calc(var(--card-padding-block) * .5);
         }
-        
+                
         .title {
             text-transform: uppercase;
             font-family: 'Oswald', sans-serif;
             text-align: center;
             color: var(--accent-color);
         }
-        
+                
         .descr {
             color: var(--text-color);
             font-size: 0.75rem;
@@ -389,7 +406,7 @@
         .hidden {
             display: none;
         }
-        
+                
         /* Form validation styles */
         .error-message {
             color: #ff3860;
@@ -397,15 +414,15 @@
             margin-top: 0.5em;
             display: none;
         }
-        
+                
         .input-error {
             border-bottom: 2px solid #ff3860 !important;
         }
-        
+                
         /* Label styling */
         label {
             font-weight: 600;
-            color: hsl(233deg 36% 38%);
+            color: #87CEEB;
             margin-bottom: 0.5em;
             display: block;
         }
@@ -414,8 +431,8 @@
 <body>
     <!-- Loader Section -->
     <div id="loader" class="loader-container">
-        <div class="container"> 
-            <div class="item item-1"></div>
+        <div class="container">
+             <div class="item item-1"></div>
             <div class="item item-2"></div>
             <div class="item item-3"></div>
             <div class="item item-4"></div>
@@ -459,7 +476,7 @@
                     </div>
                     <div class="error-message" id="nameError">Please enter your full name</div>
                 </div>
-                
+                                
                 <div class="passport">
                     <label for="passportId">Passport ID</label>
                     <div class="sec-2">
@@ -468,9 +485,9 @@
                     </div>
                     <div class="error-message" id="passportError">Please enter your passport ID</div>
                 </div>
-                
+                                
                 <button class="login-btn" type="submit">Login</button>
-                
+                                
                 <div class="footer">
                     <span>Sign up</span>
                     <span>Forgot Password?</span>
@@ -481,12 +498,108 @@
 
     <!-- Dashboard Section -->
     <div id="dashboard" class="dashboard">
+        <div class="user-info">
+            <h2>Welcome, <span id="userFullName"></span></h2>
+            <p>Passport ID: <span id="userPassportId"></span></p>
+        </div>
         <h1>Welcome<br/>To<br/>Luxembourg<br/>Embassy<br/>Official<br/>Webapp</h1>
-        
-        <a href="images/letter1.jpg" target="_blank">
-            <button class="letter-button">View Official Letter</button>
-        </a>
-        
+
+                
+        <button class="letter-button" id="viewLetterBtn">View Official Letter</button>
+
+        <!-- Letter Modal -->
+        <div id="letterModal" class="modal hidden">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Official Acceptance Letter</h2>
+                <img src="images/letter1.jpg" alt="Official Embassy Letter" style="max-width: 100%; height: auto; border: 1px solid #ddd; margin: 10px 0;">
+                <div class="letter-actions">
+                    <button id="downloadLetter">Download PDF</button>
+                    <button id="printLetter">Print Letter</button>
+                </div>
+            </div>
+        </div>
+
+        <style>
+            .user-info {
+                background: linear-gradient(90deg, #87CEEB, #6BB7D6);
+                color: white;
+                padding: 1.5em;
+                border-radius: 15px;
+                margin-bottom: 2em;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                text-align: center;
+            }
+
+            .user-info h2 {
+                margin: 0;
+                font-size: 1.8em;
+            }
+
+            .user-info p {
+                margin: 0.5em 0 0;
+                font-size: 1.1em;
+            }
+
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 1000;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0,0,0,0.7);
+            }
+
+            .modal-content {
+                background-color: #fefefe;
+                margin: 15% auto;
+                padding: 20px;
+                border: 1px solid #888;
+                width: 80%;
+                max-width: 600px;
+                border-radius: 10px;
+            }
+
+            .close {
+                color: #aaa;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+                cursor: pointer;
+            }
+
+            .close:hover {
+                color: black;
+            }
+
+            .letter-actions {
+                margin-top: 20px;
+                display: flex;
+                justify-content: space-around;
+            }
+
+            .letter-actions button {
+                padding: 10px 20px;
+                background: #87CEEB;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                margin-top: 10px;
+            }
+
+            .letter-actions button:hover {
+                background: #6BB7D6;
+            }
+
+            .modal-content img {
+                max-height: 70vh;
+                object-fit: contain;
+            }
+        </style>
+                
         <ol>
             <li style="--accent-color: #FF6F00">
                 <div class="number">01</div>
@@ -513,10 +626,203 @@
                 <div class="descr">From visa support to consular assistance, the embassy ensures Luxembourg nationals and visitors receive comprehensive and timely services abroad.</div>
             </li>
         </ol>
+
+        <style>
+            .dashboard-footer {
+                background: #87CEEB;
+                color: white;
+                padding: 2.5em 1.5em;
+                margin-top: auto;
+                font-family: 'Poppins', sans-serif;
+                border-radius: 20px;
+                box-shadow: 0 -2px 15px rgba(0,0,0,0.15);
+                width: 100%;
+            }
+
+            .dashboard {
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+                width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            
+            .footer-content {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 1em;
+                max-width: 100%;
+                margin: 0 auto;
+                padding: 0 20px;
+                box-sizing: border-box;
+            }
+            
+            .footer-section {
+                margin-bottom: 1.5em;
+            }
+            
+            .footer-section h3 {
+                font-size: 1.2em;
+                margin-bottom: 1em;
+                border-bottom: 2px solid #6BB7D6;
+                padding-bottom: 0.5em;
+            }
+            
+            .footer-section p, .footer-section a {
+                font-size: 0.95em;
+                line-height: 1.6;
+                margin-bottom: 0.8em;
+            }
+            
+            .footer-section a {
+                color: hsl(213deg 85% 97%);
+                text-decoration: none;
+                display: block;
+                transition: all 0.3s;
+            }
+            
+            .footer-section a:hover {
+                color: hsl(233deg 36% 70%);
+                transform: translateX(5px);
+            }
+            
+            .footer-bottom {
+                text-align: center;
+                padding-top: 2em;
+                margin-top: 2em;
+                border-top: 1px solid #6BB7D6;
+            }
+            
+            .footer-bottom p {
+                margin: 0;
+                font-size: 0.9em;
+            }
+            
+            .social-icons {
+                display: flex;
+                gap: 1em;
+                margin-top: 1em;
+            }
+            
+            .social-icons a {
+                font-size: 1.5em;
+                color: white;
+                transition: transform 0.3s;
+            }
+            
+            .social-icons a:hover {
+                transform: translateY(-3px) scale(1.1);
+            }
+            
+            .contact-info {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5em;
+            }
+            
+            .contact-item {
+                display: flex;
+                align-items: center;
+                gap: 0.8em;
+            }
+        </style>
+
+        <footer class="dashboard-footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Us</h3>
+                    <p>The Luxembourg Embassy is committed to strengthening international relations, promoting economic cooperation, and providing consular services to citizens.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <a href="#">Home</a>
+                    <a href="#">Services</a>
+                    <a href="#">Visa Information</a>
+                    <a href="#">Events</a>
+                    <a href="#">News</a>
+                    <a href="#">Contact</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>123 Embassy Row, Luxembourg City</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-clock"></i>
+                            <span>Mon-Fri: 9AM - 5PM</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Emergency</h3>
+                    <p>For Luxembourg citizens in distress abroad:</p>
+                    <p>Available 24/7 for emergencies</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 Luxembourg Embassy. All rights reserved. | 
+                    <a href="#">Privacy Policy</a> | 
+                    <a href="#">Terms of Service</a> | 
+                    <a href="#">Accessibility</a> | 
+                    <a href="#">Sitemap</a>
+                </p>
+            </div>
+        </footer>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Letter functionality
+            const letterBtn = document.getElementById('viewLetterBtn');
+            const letterModal = document.getElementById('letterModal');
+            const closeBtn = letterModal.querySelector('.close');
+            const downloadBtn = document.getElementById('downloadLetter');
+            const printBtn = document.getElementById('printLetter');
+
+            letterBtn.addEventListener('click', () => {
+                // Show loader first
+                loader.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+                
+                // After 6 seconds, hide loader and show letter
+                setTimeout(() => {
+                    loader.classList.add('hidden');
+                    document.body.style.overflow = '';
+                    letterModal.style.display = 'block';
+                }, 6000);
+            });
+
+            closeBtn.addEventListener('click', () => {
+                letterModal.style.display = 'none';
+            });
+
+            downloadBtn.addEventListener('click', () => {
+                alert('Download functionality would be implemented here');
+            });
+
+            printBtn.addEventListener('click', () => {
+                window.print();
+            });
+
+            window.addEventListener('click', (event) => {
+                if (event.target === letterModal) {
+                    letterModal.style.display = 'none';
+                }
+            });
+
             const loader = document.getElementById('loader');
             const breathe = document.getElementById('breathe');
             const login = document.getElementById('login');
@@ -526,64 +832,66 @@
             const passportInput = document.getElementById('passportId');
             const nameError = document.getElementById('nameError');
             const passportError = document.getElementById('passportError');
-            
-            // Show loader initially, then after 2 seconds show breathe animation
+                        
+            // Show loader initially, then after 6 seconds show breathe animation
             setTimeout(() => {
                 loader.classList.add('hidden');
                 breathe.classList.remove('hidden');
-                
+                                
                 // After 6 seconds, show login page
                 setTimeout(() => {
                     breathe.classList.add('hidden');
                     login.classList.remove('hidden');
                 }, 6000);
             }, 2000);
-            
+                        
             // Handle login form submission
             loginForm.addEventListener('submit', function(e) {
                 e.preventDefault();
-                
+                                
                 const fullName = fullNameInput.value;
                 const passportId = passportInput.value;
-                
+                                
                 // Reset error states
                 nameError.style.display = 'none';
                 passportError.style.display = 'none';
                 fullNameInput.classList.remove('input-error');
                 passportInput.classList.remove('input-error');
-                
+                                
                 // Validate inputs
                 let isValid = true;
-                
+                                
                 if (!fullName) {
                     nameError.style.display = 'block';
                     fullNameInput.classList.add('input-error');
                     isValid = false;
                 }
-                
+                                
                 if (!passportId) {
                     passportError.style.display = 'block';
                     passportInput.classList.add('input-error');
                     isValid = false;
                 }
-                
+                                
                 if (!isValid) return;
-                
+                                
                 // Check credentials
                 if (fullName.toUpperCase() === "EVEN BIRHANE TEKLEMARIAM" && passportId === "EP2547971") {
                     login.classList.add('hidden');
                     dashboard.style.display = 'block';
+                    document.getElementById('userFullName').textContent = fullName;
+                    document.getElementById('userPassportId').textContent = passportId;
                 } else {
                     alert("Invalid credentials. Please try again.");
                 }
             });
-            
+                        
             // Clear error when typing
             fullNameInput.addEventListener('input', function() {
                 nameError.style.display = 'none';
                 fullNameInput.classList.remove('input-error');
             });
-            
+                        
             passportInput.addEventListener('input', function() {
                 passportError.style.display = 'none';
                 passportInput.classList.remove('input-error');
