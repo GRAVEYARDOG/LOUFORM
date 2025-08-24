@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxembourg Embassy Webapp</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <style>
+        /* Loader Styles */
+        .loader-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: white;
+            z-index: 1000;
+        }
+
+        .container {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+
+        .item {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+        }
+
+        .item-1 {
+            background-color: #FA5667;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            animation: item-1_move 1.8s cubic-bezier(.6,.01,.4,1) infinite;
+        }
+
+        .item-2 {
+            background-color: #FFC0CB;
+            top: 0;
+            right: 0;
+            animation: item-2_move 1.8s cubic-bezier(.6,.01,.4,1) infinite;
+        }
+
+        .item-3 {
+            background-color: #1B91F7;
+            bottom: 0;
+            right: 0;
+            z-index: 1;
+            animation: item-3_move 1.8s cubic-bezier(.6,.01,.4,1) infinite;
+        }
+
+        .item-4 {
+            background-color: #D3D3D3;
+            bottom: 0;
+            left: 0;
+            animation: item-4_move 1.8s cubic-bezier(.6,.01,.4,1) infinite;
+        }
+
+        @keyframes item-1_move {
+            0%, 100% {transform: translate(0, 0)} 
+            25% {transform: translate(0, 100px)} 
+            50% {transform: translate(100px, 100px)} 
+            75% {transform: translate(100px, 0)} 
+        }
+
+        @keyframes item-2_move {
+            0%, 100% {transform: translate(0, 0)} 
+            25% {transform: translate(-100px, 0)} 
+            50% {transform: translate(-100px, 100px)} 
+            75% {transform: translate(0, 100px)} 
+        }
+
+        @keyframes item-3_move {
+            0%, 100% {transform: translate(0, 0)} 
+            25% {transform: translate(0, -100px)} 
+            50% {transform: translate(-100px, -100px)} 
+            75% {transform: translate(-100px, 0)} 
+        }
+
+        @keyframes item-4_move {
+            0%, 100% {transform: translate(0, 0)} 
+            25% {transform: translate(100px, 0)} 
+            50% {transform: translate(100px, -100px)} 
+            75% {transform: translate(0, -100px)} 
+        }
+
+        /* Breathe Animation */
+        @font-face {
+            font-family: 'TheFont';
+            src: url("https://garet.typeforward.com/assets/fonts/shared/TFMixVF.woff2") format('woff2');
+        }
+
+        .breathe-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgb(135, 225, 255);
+            z-index: 900;
+        }
+
+        .breathe-animation span {
+            font-family: 'TheFont';
+            font-size: clamp(2vw, 5vw, 15vh);
+            color: white;
+            text-align: center; 
+            animation: letter-breathe 3s ease-in-out infinite;
+        }
+        
+        @keyframes letter-breathe {
+            from, to {
+                font-variation-settings: 'wght' 100;
+            }
+            50% {
+                font-variation-settings: 'wght' 900;
+            }
+        }
+
+        /* New Login Form Styles */
+        .login-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: hsl(218deg 50% 91%);
+            z-index: 800;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .screen-1 {
+            background: hsl(213deg 85% 97%);
+            padding: 2.5em; /* Increased padding */
+            display: flex;
+            flex-direction: column;
+            border-radius: 30px;
+            box-shadow: 0 0 2em hsl(231deg 62% 94%);
+            gap: 2em; /* Increased gap for better spacing */
+            max-width: 450px; /* Slightly wider */
+            width: 90%;
+        }
+
+        .screen-1 .logo {
+            align-self: center;
+            width: 120px;
+            margin-bottom: 0.5em; /* Added margin for spacing */
+        }
+
+        .fullname, .passport {
+            background: hsl(0deg 0% 100%);
+            box-shadow: 0 0 2em hsl(231deg 62% 94%);
+            padding: 1.2em; /* Increased padding */
+            display: flex;
+            flex-direction: column;
+            gap: 0.8em; /* Increased gap */
+            border-radius: 20px;
+            color: hsl(0deg 0% 30%);
+        }
+
+        .fullname input, .passport input {
+            outline: none;
+            border: none;
+            width: 100%;
+            font-size: 1.1em; /* Slightly larger font */
+            padding: 0.5em 0; /* Added padding */
+        }
+
+        .fullname input::placeholder, .passport input::placeholder {
+            color: hsl(0deg 0% 40%);
+            font-size: 1em;
+        }
+
+        .fullname ion-icon, .passport ion-icon {
+            color: hsl(0deg 0% 30%);
+            font-size: 1.4em; /* Slightly larger icons */
+        }
+
+        .sec-2 {
+            display: flex;
+            align-items: center;
+            gap: 0.8em; /* Increased gap */
+        }
+
+        .login-btn {
+            padding: 1.2em; /* Increased padding */
+            background: hsl(233deg 36% 38%);
+            color: hsl(0 0 100);
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1em; /* Slightly larger font */
+            margin-top: 1em; /* Added margin for spacing */
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .login-btn:hover {
+            background: hsl(233deg 36% 30%);
+            transform: translateY(-2px);
+        }
+
+        .footer {
+            display: flex;
+            font-size: 0.8em; /* Slightly larger font */
+            color: hsl(0deg 0% 37%);
+            justify-content: space-between;
+            margin-top: 1.5em; /* Increased margin */
+        }
+
+        .footer span {
+            cursor: pointer;
+            transition: color 0.3s;
+            padding: 0.5em; /* Added padding for larger click area */
+        }
+
+        .footer span:hover {
+            color: hsl(233deg 36% 38%);
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        /* Dashboard Styles */
+        .dashboard {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #f5f5f5;
+            padding: 20px;
+            overflow-y: auto;
+            z-index: 700;
+            display: none;
+        }
+
+        .dashboard h1 {
+            font-family: 'TheFont';
+            text-align: center;
+            margin-bottom: 40px;
+            animation: letter-breathe 3s ease-in-out infinite;
+            color: #4C489D;
+        }
+
+        .letter-button {
+            display: block;
+            margin: 30px auto;
+            padding: 15px 30px;
+            background: linear-gradient(90deg, #5D54A4, #7C78B8);
+            color: white;
+            border: none;
+            border-radius: 26px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .letter-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Grid layout */
+        ol, ol::before, ol::after, 
+        ol *, ol *::before, ol *::after { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+        
+        ol { 
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+            gap: 1rem;
+            width: min(60rem, calc(100% - 2rem));
+            margin-inline: auto;
+            padding-block: 1rem;
+            list-style: none;
+        }
+
+        /* Card layout/styling */
+        ol > li {
+            --card-background-color: #f0f0f0;
+            --card-text-color: #0F0F0F;
+            --card-border-radius: 0.5rem;
+            --card-padding-block: 1.5rem;
+            --card-padding-inline: 1rem;
+            --outset-size: 0.75rem;
+            --outset-background-color: #e5e5e5;
+            --number-font-size: 3rem;
+            --number-overlap: 0.5rem;
+            --number-font-family: 'Oswald', sans-serif;
+            --number-font-weight: 500;
+            
+            margin: var(--outset-size);
+            margin-top: calc(var(--number-font-size) - var(--number-overlap));
+            border-radius: var(--card-border-radius);
+            padding-block: var(--card-padding-block);
+            padding-inline: var(--card-padding-inline);
+            
+            color: var(--card-text-color);
+            background-color: var(--card-background-color);
+            box-shadow: 
+                inset 1px 1px 0px rgb(255 255 255 / .5),
+                inset -1px -1px 0px rgb(0 0 0 / .25),
+                calc(var(--outset-size) * .25) calc(var(--outset-size) * .25) calc(var(--outset-size) * .5) rgb(0 0 0 / .25);
+            position: relative;
+        }
+
+        .number {
+            position: absolute;
+            bottom: calc(100% - var(--number-overlap));
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--accent-color);
+            font-family: 'TheFont';
+            font-weight: 700;
+            font-size: var(--number-font-size);
+            line-height: 1;
+            z-index: -1;
+            animation: letter-breathe 3s ease-in-out infinite;
+        }
+
+        ol > li::before {
+            content: "";
+            position: absolute;
+            width: calc(100% + (var(--outset-size) * 2));
+            height: 100%;
+            bottom: calc(var(--outset-size) * -1);
+            left: calc(var(--outset-size) * -1);
+            z-index: -1;
+            
+            border-bottom-left-radius: calc(var(--card-border-radius) + var(--outset-size));
+            border-bottom-right-radius: calc(var(--card-border-radius) + var(--outset-size));
+            
+            background-color: var(--outset-background-color);
+            
+            background-image: 
+                linear-gradient(to left, var(--outset-background-color) calc(var(--outset-size) * 2), transparent 0),
+                linear-gradient(135deg, var(--accent-color) 80%, var(--outset-background-color) 0);    
+        }
+
+        /* Card content */
+        .icon {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: calc(var(--card-padding-block) * .5);
+        }
+        
+        .title {
+            text-transform: uppercase;
+            font-family: 'Oswald', sans-serif;
+            text-align: center;
+            color: var(--accent-color);
+        }
+        
+        .descr {
+            color: var(--text-color);
+            font-size: 0.75rem;
+            font-family: 'Merriweather', serif;
+            text-align: center;
+        }
+
+        /* Utility classes */
+        .hidden {
+            display: none;
+        }
+        
+        /* Form validation styles */
+        .error-message {
+            color: #ff3860;
+            font-size: 0.8em;
+            margin-top: 0.5em;
+            display: none;
+        }
+        
+        .input-error {
+            border-bottom: 2px solid #ff3860 !important;
+        }
+        
+        /* Label styling */
+        label {
+            font-weight: 600;
+            color: hsl(233deg 36% 38%);
+            margin-bottom: 0.5em;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loader Section -->
+    <div id="loader" class="loader-container">
+        <div class="container"> 
+            <div class="item item-1"></div>
+            <div class="item item-2"></div>
+            <div class="item item-3"></div>
+            <div class="item item-4"></div>
+        </div>
+    </div>
+
+    <!-- Breathe Animation Section -->
+    <div id="breathe" class="breathe-animation hidden">
+        <span>WELCOME<br/>to<br/>luxembourg<br/>embassy<br/>webbapp</span>
+    </div>
+
+    <!-- Login Section -->
+    <div id="login" class="login-container hidden">
+        <div class="screen-1">
+            <svg class="logo" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 640 480" xml:space="preserve">
+                <g transform="matrix(3.31 0 0 3.31 320.4 240.4)">
+                    <circle style="stroke: rgb(0,0,0); stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(61,71,133); fill-rule: nonzero; opacity: 1;" cx="0" cy="0" r="40"></circle>
+                </g>
+                <g transform="matrix(0.98 0 0 0.98 268.7 213.7)">
+                    <circle style="stroke: rgb(0,0,0); stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;" cx="0" cy="0" r="40"></circle>
+                </g>
+                <g transform="matrix(1.01 0 0 1.01 362.9 210.9)">
+                    <circle style="stroke: rgb(0,0,0); stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;" cx="0" cy="0" r="40"></circle>
+                </g>
+                <g transform="matrix(0.92 0 0 0.92 318.5 286.5)">
+                    <circle style="stroke: rgb(0,0,0); stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;" cx="0" cy="0" r="40"></circle>
+                </g>
+                <g transform="matrix(0.16 -0.12 0.49 0.66 290.57 243.57)">
+                    <polygon style="stroke: rgb(0,0,0); stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;" points="-50,-50 -50,50 50,50 50,-50 "></polygon>
+                </g>
+                <g transform="matrix(0.16 0.1 -0.44 0.69 342.03 248.34)">
+                    <polygon style="stroke: rgb(0,0,0); stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;" vector-effect="non-scaling-stroke" points="-50,-50 -50,50 50,50 50,-50 "></polygon>
+                </g>
+            </svg>
+            <form id="loginForm">
+                <div class="fullname">
+                    <label for="fullName">Full Name</label>
+                    <div class="sec-2">
+                        <ion-icon name="person-outline"></ion-icon>
+                        <input type="text" name="fullName" id="fullName" placeholder="Full Name">
+                    </div>
+                    <div class="error-message" id="nameError">Please enter your full name</div>
+                </div>
+                
+                <div class="passport">
+                    <label for="passportId">Passport ID</label>
+                    <div class="sec-2">
+                        <ion-icon name="lock-closed-outline"></ion-icon>
+                        <input type="text" name="passportId" id="passportId" placeholder="Passport ID">
+                    </div>
+                    <div class="error-message" id="passportError">Please enter your passport ID</div>
+                </div>
+                
+                <button class="login-btn" type="submit">Login</button>
+                
+                <div class="footer">
+                    <span>Sign up</span>
+                    <span>Forgot Password?</span>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Dashboard Section -->
+    <div id="dashboard" class="dashboard">
+        <h1>Welcome<br/>To<br/>Luxembourg<br/>Embassy<br/>Official<br/>Webapp</h1>
+        
+        <a href="images/letter1.jpg" target="_blank">
+            <button class="letter-button">View Official Letter</button>
+        </a>
+        
+        <ol>
+            <li style="--accent-color: #FF6F00">
+                <div class="number">01</div>
+                <div class="icon"><i class="fa-light fa-lightbulb-exclamation-on"></i></div>
+                <div class="title">Diplomatic Insight</div>
+                <div class="descr">The Luxembourg Embassy offers strategic analysis on bilateral relations, trade policies, and cultural exchange initiatives to strengthen international cooperation.</div>
+            </li>
+            <li style="--accent-color: #008DC2">
+                <div class="number">02</div>
+                <div class="icon"><i class="fa-light fa-flower-daffodil"></i></div>
+                <div class="title">Economic Ties</div>
+                <div class="descr">Focused on fostering investment opportunities, the embassy connects Luxembourg's financial ecosystem with global partners and emerging markets.</div>
+            </li>
+            <li style="--accent-color: #0B456A">
+                <div class="number">03</div>
+                <div class="icon"><i class="fa-light fa-chart-line-up"></i></div>
+                <div class="title">Cultural Growth</div>
+                <div class="descr">Through events, education programs, and heritage promotion, the Luxembourg Embassy nurtures cultural understanding and mutual respect.</div>
+            </li>
+            <li style="--accent-color: #6A829A">
+                <div class="number">04</div>
+                <div class="icon"><i class="fa-light fa-chart-mixed"></i></div>
+                <div class="title">Citizen Services</div>
+                <div class="descr">From visa support to consular assistance, the embassy ensures Luxembourg nationals and visitors receive comprehensive and timely services abroad.</div>
+            </li>
+        </ol>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loader = document.getElementById('loader');
+            const breathe = document.getElementById('breathe');
+            const login = document.getElementById('login');
+            const dashboard = document.getElementById('dashboard');
+            const loginForm = document.getElementById('loginForm');
+            const fullNameInput = document.getElementById('fullName');
+            const passportInput = document.getElementById('passportId');
+            const nameError = document.getElementById('nameError');
+            const passportError = document.getElementById('passportError');
+            
+            // Show loader initially, then after 2 seconds show breathe animation
+            setTimeout(() => {
+                loader.classList.add('hidden');
+                breathe.classList.remove('hidden');
+                
+                // After 6 seconds, show login page
+                setTimeout(() => {
+                    breathe.classList.add('hidden');
+                    login.classList.remove('hidden');
+                }, 6000);
+            }, 2000);
+            
+            // Handle login form submission
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const fullName = fullNameInput.value;
+                const passportId = passportInput.value;
+                
+                // Reset error states
+                nameError.style.display = 'none';
+                passportError.style.display = 'none';
+                fullNameInput.classList.remove('input-error');
+                passportInput.classList.remove('input-error');
+                
+                // Validate inputs
+                let isValid = true;
+                
+                if (!fullName) {
+                    nameError.style.display = 'block';
+                    fullNameInput.classList.add('input-error');
+                    isValid = false;
+                }
+                
+                if (!passportId) {
+                    passportError.style.display = 'block';
+                    passportInput.classList.add('input-error');
+                    isValid = false;
+                }
+                
+                if (!isValid) return;
+                
+                // Check credentials
+                if (fullName.toUpperCase() === "EVEN BIRHANE TEKLEMARIAM" && passportId === "EP2547971") {
+                    login.classList.add('hidden');
+                    dashboard.style.display = 'block';
+                } else {
+                    alert("Invalid credentials. Please try again.");
+                }
+            });
+            
+            // Clear error when typing
+            fullNameInput.addEventListener('input', function() {
+                nameError.style.display = 'none';
+                fullNameInput.classList.remove('input-error');
+            });
+            
+            passportInput.addEventListener('input', function() {
+                passportError.style.display = 'none';
+                passportInput.classList.remove('input-error');
+            });
+        });
+    </script>
+</body>
+</html>
